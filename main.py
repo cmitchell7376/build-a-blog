@@ -9,24 +9,33 @@ db = SQLAlchemy(app)
 
 class Blog (db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    blogs_title = db.Column(db.String(120))
-    entry = db.Column(db.String(200))
+    title = db.Column(db.String(120))
+    text = db.Column(db.String(200))
 
-    def __init__(self,blogs_title,entry):
-        self.blogs_title = blogs_title
-        self.entry = entry
+    def __init__(self,title,text):
+        self.title = title
+        self.text = text
+
+@app.route("/", methods=['POST', 'GET'])
+def Main_page():
+
+    blog_entry = Blog.query.all()
+    return render_template("blog.html", blog_entry = blog_entry)
+
 
 @app.route("/entry", methods=['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
-        blog_name = request.form['blog_title']
+        blog_title = request.form['blog_title']
         blog_text = request.form['blog_text']
-        blog_entry = Blog(blog_name,blog_text)
+        blog_entry = Blog(blog_title,blog_text)
         db.session.add(blog_entry)
         db.session.commit()
 
-    return render_template("index.html",title="Blog")
+        return redirect('/')
+
+    return render_template("index.html")
 
 
 
