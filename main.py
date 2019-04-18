@@ -16,6 +16,24 @@ class Blog (db.Model):
         self.title = title
         self.text = text
 
+blog_id = ''
+
+@app.route("/page", methods=['GET'])
+def page():
+    a = Blog.query.filter_by(id = blog_id).all()
+    return render_template('page.html', a = a)
+    
+@app.route('/blog', methods=['POST'])
+def blog():
+    blog_title = request.form['blog_title']
+    blog_text = request.form['blog_text']
+    blog_entry = Blog(blog_title,blog_text)
+    db.session.add(blog_entry)
+    db.session.commit()
+    
+    blog_id = int(2)
+    return redirect("/page")
+
 @app.route("/", methods=['POST', 'GET'])
 def Main_page():
 
@@ -26,14 +44,7 @@ def Main_page():
 @app.route("/entry", methods=['POST', 'GET'])
 def index():
 
-    if request.method == 'POST':
-        blog_title = request.form['blog_title']
-        blog_text = request.form['blog_text']
-        blog_entry = Blog(blog_title,blog_text)
-        db.session.add(blog_entry)
-        db.session.commit()
-
-        return redirect('/')
+   
 
     return render_template("index.html")
 
