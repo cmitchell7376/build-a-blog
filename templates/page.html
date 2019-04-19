@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{a}}</h1>
+{% for title in titles %}
+<h1>{{title.title}}</h1>
+<h3>{{title.text}}</h3>
+{% endfor %}
 
 {% endblock %}
