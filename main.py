@@ -16,35 +16,33 @@ class Blog (db.Model):
         self.title = title
         self.text = text
 
-    
-@app.route('/blog', methods=['POST'])
+
+@app.route('/blog', methods=['POST' , 'GET'])
 def blog():
     if request.method == 'POST':
         blog_title = request.form['blog_title']
         blog_text = request.form['blog_text']
-
         blog_entry = Blog(blog_title,blog_text)
         db.session.add(blog_entry)
         db.session.commit()
+        list_tmp = Blog.query.all()
+        id = str(len(list_tmp)) 
+        return redirect('/newpage?id={0}'.format(id))
 
-    list_tmp = Blog.query.all()
-    length = len(list_tmp) 
-    titles = Blog.query.filter_by(id = length).all()
-    return render_template("page.html", titles=titles)
-
-@app.route("/", methods=['POST', 'GET'])
-def index():
 
     blog_entry = Blog.query.all()
-    return render_template("index.html", blog_entry = blog_entry)
+    return render_template("blog.html", blog_entry = blog_entry) 
 
+@app.route('/newpage')
+def newpage():
+    id = int(request.args.get('id'))
+    blog_id = Blog.query.filter_by(id = id).all()
+    return render_template('page.html', titles = blog_id)
 
-@app.route("/entry", methods=['POST', 'GET'])
+@app.route('/newpost')
 def entry():
 
-   
-
-    return render_template("entry.html")
+    return render_template("newpost.html")
 
 
 
