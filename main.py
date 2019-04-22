@@ -41,7 +41,6 @@ def newpage():
 
 @app.route('/newpost')
 def entry():
-
     return render_template("newpost.html")
 
 
