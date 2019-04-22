@@ -2,8 +2,9 @@
 <html>
     <head>
         <title>Blogs</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
         <a href="/blog">Main Blog Page</a>
-        <a href="/newpost">Add a Blog Entry</a>
+        <a class="h-link" href="/newpost">Add a Blog Entry</a>
     </head>
     <body>
         {% block content %}
