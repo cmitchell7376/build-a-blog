@@ -44,11 +44,5 @@ def entry():
     return render_template("newpost.html")
 
 
-
-
-
-
-
-
 if __name__ == '__main__':
     app.run()
