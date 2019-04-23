@@ -19,16 +19,26 @@ class Blog (db.Model):
 
 @app.route('/blog', methods=['POST' , 'GET'])
 def blog():
+    error_title = ''
+    error_text = ''
     if request.method == 'POST':
         blog_title = request.form['blog_title']
         blog_text = request.form['blog_text']
-        blog_entry = Blog(blog_title,blog_text)
-        db.session.add(blog_entry)
-        db.session.commit()
-        list_tmp = Blog.query.all()
-        id = str(len(list_tmp)) 
-        return redirect('/newpage?id={0}'.format(id))
 
+        if blog_title == '':
+            error_title = " no title"
+              
+        if error_title:    
+            return render_template("newpost.html", error_title = error_title , blog_text = blog_text)
+
+        else:
+
+            blog_entry = Blog(blog_title,blog_text)
+            db.session.add(blog_entry)
+            db.session.commit()
+            list_tmp = Blog.query.all()
+            id = str(len(list_tmp)) 
+            return redirect('/newpage?id={0}'.format(id))
 
     blog_entry = Blog.query.all()
     return render_template("blog.html", blog_entry = blog_entry) 

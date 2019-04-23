@@ -7,14 +7,15 @@
     <label>
         Title for your new blog:
         <br>
-        <input type="text" name="blog_title" />
+        <input type="text" name="blog_title" value="{{blog_title}}"/>
+        <span style="color: red;">{{error_title}}</span>
     </label>
     <br>
     <br>
     <label>
         Your new blog:
         <br>
-        <textarea name="blog_text"></textarea>
+        <textarea name="blog_text" value='{{blog_text}}'></textarea>
     </label>
     <br>
     <br>
