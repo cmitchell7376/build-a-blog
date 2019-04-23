@@ -27,10 +27,11 @@ def blog():
 
         if blog_title == '':
             error_title = " no title"
-              
-        if error_title:    
             return render_template("newpost.html", error_title = error_title , blog_text = blog_text)
 
+        if blog_text == '':
+            error_text = " no text"
+            return render_template("newpost.html", error_text = error_text , blog_title = blog_title)
         else:
 
             blog_entry = Blog(blog_title,blog_text)
