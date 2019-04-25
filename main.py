@@ -25,6 +25,11 @@ def blog():
         blog_title = request.form['blog_title']
         blog_text = request.form['blog_text']
 
+        if blog_title == '' and blog_text == '':
+            error_title = ' no title'
+            error_text = ' no text'
+            return render_template("newpost.html", error_title = error_title , error_text = error_text)
+
         if blog_title == '':
             error_title = " no title"
             return render_template("newpost.html", error_title = error_title , blog_text = blog_text)
